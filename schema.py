@@ -3,7 +3,7 @@ from typing import Optional, Literal
 
 
 class TestCase(BaseModel):
-    """Defines the strict structure for a single test scenario in the matrix."""
+    """Defines the structure for a single test scenario in the matrix."""
 
     test_id: str = Field(
         description="A unique identifier for the test.", examples=["TC-001-VALID"]
@@ -28,3 +28,18 @@ class TestCase(BaseModel):
     expected_amount: Optional[float] = Field(
         default=None, description="The expected refund amount if the tool is called"
     )
+
+class RefundArguments(BaseModel):
+    """The arguments required to execute the issue_refund tool."""
+    
+    order_id: str = Field(
+        description="The alphanumeric identifier for the customer's order.",
+        examples=["A1B2", "C3D4"]
+    )
+    
+    amount: float = Field(
+        description="The exact refund amount requested in USD. Must be a float.",
+    )
+
+if __name__ == "__main__":
+    print(RefundArguments.model_json_schema())
