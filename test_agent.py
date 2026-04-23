@@ -9,6 +9,8 @@ def run_sanity_check():
 
     try:
         response = agent.get_agent_response(test_prompt)
+        print("Token Usage:")
+        print(f"{response.output}\n")
         
         tool_call_detected = False
         for item in response.output:
@@ -18,7 +20,7 @@ def run_sanity_check():
                 print(f"Tool executed: {item.name}")
                 
                 args = json.loads(item.arguments)
-                print(f"Extracted arguments: {json.dumps(args, indent=2)}")
+                print(f"Extracted arguments: {json.dumps(args)}")
                 
         if not tool_call_detected:
             print("The agent ignored the tool.")
